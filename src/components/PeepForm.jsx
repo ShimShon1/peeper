@@ -36,19 +36,29 @@ export default function PeepForm(props){
 
     return(
 
-        <form onSubmit={(e)=>addPeep(e)}>
+        <form className="w-full" onSubmit={(e)=>addPeep(e)}>
 
-        <textarea value={content} onChange={(e)=>setContent(e.target.value)}
-        className='border-2' placeholder='content here...'
-        />
+        <div className="h-24  mt-10 relative">
+            <textarea cl value={content} onChange={(e)=>setContent(e.target.value)}
+            className='indent-2 relative border-2 h-full w-full rounded-md' placeholder="What's happening?"
+            />
 
-        <input type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} />
+
+        <input className="absolute w-1/2 text-xs block  bottom-2 left-2 text-gray-700 file:rounded-sm file:bg-emerald-600 file:text-white file:border-none file:shadow-none"
+        type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} content="gay"  />
+        
+
 
         <button 
-        className="p-1 px-2  bg-emerald-500 text-white rounded-lg"
-        >Peep!</button>
+        className="p-1 px-2 absolute bottom-2 right-2 bg-emerald-600 text-white rounded-lg "
+        >Peep</button>
   
   
+        </div>
+     
+      
+
+       
         </form>
 
 
