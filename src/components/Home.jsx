@@ -6,10 +6,10 @@ import PeepForm from './PeepForm';
 import { db } from '../config';
 
 
+import { getAuth, signInWithPopup, GoogleAuthProvider,signOut } from "firebase/auth";
 
 
 export default function Home(props){
-    console.log(props)
     const updatePeepsList = props.updatePeepsList
     const peepsObjects = props.peepsObjects
    

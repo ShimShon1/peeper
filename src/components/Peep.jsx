@@ -9,7 +9,6 @@ export default function Peep(props){
 
     let peep = props.peep
 
-    console.log(peep)
     const peepRef = doc(db,"peeps",peep.docId)
 
     async function addComment(){
@@ -27,7 +26,6 @@ export default function Peep(props){
     props.updatePeepsList()
     }
 
-    console.log(peep.comments)
     const commentElms = peep.comments.map((comment)=>{
         return <p> {comment.content} </p>
     }
@@ -40,7 +38,6 @@ export default function Peep(props){
             <div className='p-2 border-b-2 border-black space-y-3'>
                 <p>{peep.content}</p>
                 <hr></hr>
-                
                 {peep.imgLink && <img className="max-h-40 border-2 p-2" src={peep.imgLink} alt="" />}
                 <div className='text-sm mt-4 space-y-2'>
                 <hr></hr>

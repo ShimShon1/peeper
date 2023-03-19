@@ -26,7 +26,6 @@ export default function PeepPage(props){
     props.updatePeepsList()
     }
 
-    console.log(peep.comments)
     const commentElms = peep.comments.map((comment)=>{
         return <p> {comment.content} </p>
     }

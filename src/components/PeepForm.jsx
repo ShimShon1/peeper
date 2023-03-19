@@ -8,7 +8,6 @@ export default function PeepForm(props){
      const [content,setContent] = useState("")
      const [newImg,setNewImg] = useState(false)
 
-     console.log(newImg.name)
 
      async function addPeep(e){
         e.preventDefault()
@@ -36,25 +35,29 @@ export default function PeepForm(props){
 
     return(
 
-        <form className="w-full" onSubmit={(e)=>addPeep(e)}>
+        <form className="w-full border  mb-20 space-y-4" onSubmit={(e)=>addPeep(e)}>
 
-        <div className="h-24  mt-10 relative">
-            <textarea cl value={content} onChange={(e)=>setContent(e.target.value)}
-            className='indent-2 relative border-2 h-full w-full rounded-md' placeholder="What's happening?"
-            />
-
-
-        <input className="absolute w-1/2 text-xs block  bottom-2 left-2 text-gray-700 file:rounded-sm file:bg-emerald-600 file:text-white file:border-none file:shadow-none"
-        type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} content="gay"  />
-        
+            <div className="">
+                <textarea  value={content} onChange={(e)=>setContent(e.target.value)}
+                className='indent-2 relative h-24  w-full rounded-md'  placeholder="What's happening?"
+                />
 
 
-        <button 
-        className="p-1 px-2 absolute bottom-2 right-2 bg-emerald-600 text-white rounded-lg "
-        >Peep</button>
-  
-  
+        <hr></hr>
+        <div className="flex items-center justify-between p-2">
+            <input className=" w-1/2 text-xs block  text-gray-700 file:rounded-sm file:bg-emerald-600 file:text-white file:border-none file:shadow-none"
+            type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} content="gay"  />
+
+
+            <button 
+            className="p-1 px-2  bg-emerald-600 text-white rounded-lg "
+            >Peep</button>
+
         </div>
+      
+    
+    
+            </div>
      
       
 
