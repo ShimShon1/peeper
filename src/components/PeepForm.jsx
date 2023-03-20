@@ -1,7 +1,7 @@
 import { addDoc,collection } from "firebase/firestore";
 import { useState } from "react"
 import { db,storage } from "../config";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 
 export default function PeepForm(props){
@@ -23,7 +23,12 @@ export default function PeepForm(props){
         await addDoc(collection(db, "peeps"), {
           content:content,
           comments:[],
-          imgLink: imgLink
+          imgLink: imgLink,
+          userPosted :{
+              uid : props.user.uid,
+              photoURL: props.user.photoURL,
+              displayName: props.user.displayName
+          }
         });
     
         setContent("")
@@ -31,12 +36,14 @@ export default function PeepForm(props){
       }
 
 
+      const user = props.user
 
 
     return(
 
         <form className="w-full border  mb-20 space-y-4" onSubmit={(e)=>addPeep(e)}>
-
+        <img src={user.photoURL} alt="profile-pic" />
+        <span>{user.displayName}</span>
             <div className="">
                 <textarea  value={content} onChange={(e)=>setContent(e.target.value)}
                 className='indent-2 relative h-24  w-full rounded-md'  placeholder="What's happening?"

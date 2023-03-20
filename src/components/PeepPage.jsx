@@ -1,13 +1,11 @@
 import { addDoc,collection,doc,updateDoc } from "firebase/firestore";
 import { useState } from "react"
-import { Link } from "react-router-dom";
 import { db } from "../config";
 
-export default function PeepPage(props){
+export default function PeepPage({peep,updatePeepsList,user}){
     const[newComment,setNewComment] = useState('')
 
 
-    let peep = props.peep
 
     const peepRef = doc(db,"peeps",peep.docId)
 
@@ -17,19 +15,41 @@ export default function PeepPage(props){
                 ...peep.comments,
                 {
                     content:newComment,
+                    uid:user.uid,
                 }
             ]
         }
        )
 
 
-    props.updatePeepsList()
+    updatePeepsList()
     }
 
+
+
+    async function deleteComment(content){
+        console.log(content,"content")
+        await updateDoc(peepRef,{
+            comments: peep.comments.filter((comment)=>content == comment.content && comment.uid == user.uid? false:true)
+        }
+       )
+
+
+    updatePeepsList()
+    }
     const commentElms = peep.comments.map((comment)=>{
-        return <p> {comment.content} </p>
+        return(
+            <div>
+                <p> {comment.content} </p>
+                <button onClick={() => deleteComment(comment.content)}
+                className='border'>Delete</button>
+
+
+            </div>
+        ) 
     }
     )
+
 
     return(
         
@@ -47,6 +67,9 @@ export default function PeepPage(props){
             <button onClick={addComment}
             className='border'>Send</button>
 
+
+           
+            
             </div>
         </div>
         

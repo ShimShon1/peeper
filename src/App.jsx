@@ -1,12 +1,11 @@
-import { collection, getDocs } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { collection, getDocs} from "firebase/firestore"
+import { useEffect, useState, } from "react"
 import { Route, Routes } from "react-router-dom"
 import Home from "./components/Home"
 import Nav from "./components/Nav"
-import PeepForm from "./components/PeepForm"
 import PeepPage from "./components/PeepPage"
 import { auth, db, googleProvider } from "./config"
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import {signInWithPopup,  onAuthStateChanged } from "firebase/auth";
 
 export default function App() {
   const [peepsObjects,setPeepsObjects] = useState([])
@@ -30,42 +29,47 @@ export default function App() {
   useEffect(()=>updatePeepsList,[])
 
 
-  const peepRoutes = peepsObjects.map(peep=><Route key={peep.docId}  path={peep.docId} element={<PeepPage peep={peep} updatePeepsList={updatePeepsList} />} />)
+  const peepRoutes = peepsObjects.map(peep=><Route key={peep.docId}  path={peep.docId} element={<PeepPage user={user} peep={peep} updatePeepsList={updatePeepsList} />} />)
 
 
+
+  useEffect(()=>{
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        setUser(user)
+        console.log("hey")
+
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        setUser(false)
+        console.log("bye")
+      }
+    });
+  
+
+  },[])
 
   async function login(){
-
    const response = await signInWithPopup(auth, googleProvider)
-
    console.log(response.user)
-   setUser(response.user)
 
 
   }
 
 
-  async function logout(){
-
-    await signOut(auth)
-
-    setUser(false)
-    console.log(user)
-    
-   }
  
- 
-
-   console.log(user,"i am himn")
-
   return (
-    <div className="App p-4  w-1/3 m-auto ">
-      <Nav/>
+    <div className="App p-4   m-auto relative ">
+      <Nav login={login} user={user}/>
       <button onClick={login}>LOGIN</button>
-      <button onClick={logout}>LOGOUT</button>
 
       <Routes>
-          <Route path="/" element={<Home peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
+          <Route path="/" element={<Home user={user} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
           <Route path="/profile" element={ <h1>Profile</h1>} />
           {peepRoutes}
       </Routes>
