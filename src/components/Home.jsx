@@ -16,7 +16,6 @@ export default function Home(props){
   
     return(
         <>
-            <h1>Home</h1>
             {props.user && <PeepForm user={props.user} updatePeepsList={updatePeepsList}/>}
             {peepElms}
         

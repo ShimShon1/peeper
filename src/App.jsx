@@ -3,6 +3,8 @@ import { useEffect, useState, } from "react"
 import { Route, Routes } from "react-router-dom"
 import Home from "./components/Home"
 import Nav from "./components/Nav"
+import LoginPrompt from "./components/LoginPrompt"
+
 import PeepPage from "./components/PeepPage"
 import { auth, db, googleProvider } from "./config"
 import {signInWithPopup,  onAuthStateChanged } from "firebase/auth";
@@ -64,9 +66,32 @@ export default function App() {
 
  
   return (
-    <div className="App p-4   m-auto relative ">
-      <Nav login={login} user={user}/>
-      <button onClick={login}>LOGIN</button>
+    <div className="w-full h-full md:grid grid-cols-5 
+    
+      lg:grid-cols-9
+    ">
+      
+    <header className="fixed w-full z-10 bottom-0
+    
+    
+      md:relative md:h-full md:flex md:justify-end 
+
+      lg:col-span-2 lg:px-8
+    ">
+
+       <Nav login={login} user={user}/>
+
+
+    </header>
+    <LoginPrompt login={login} user={user}/>
+
+    <main className="App p-4   m-auto relative mb-[68px] z-1 col-start-2 col-span-3 w-full border
+    
+      lg:col-span-5 lg:p-8
+    
+    
+    ">
+
 
       <Routes>
           <Route path="/" element={<Home user={user} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
@@ -74,6 +99,7 @@ export default function App() {
           {peepRoutes}
       </Routes>
 
+    </main>
     </div>
   )
 }
