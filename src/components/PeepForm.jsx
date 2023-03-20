@@ -41,16 +41,19 @@ export default function PeepForm(props){
 
     return(
 
-        <form className="w-full border  mb-20 space-y-4" onSubmit={(e)=>addPeep(e)}>
-        <img src={user.photoURL} alt="profile-pic" />
-        <span>{user.displayName}</span>
-            <div className="">
+        <form className="w-full flex gap-3  space-y-4" onSubmit={(e)=>addPeep(e)}>
+
+        <div className="">
+            <img className="rounded-[50%] h-14" src={user.photoURL} alt="profile-pic" />
+        </div>
+        
+
+            <div className="pt-3 flex-grow text-xl">
                 <textarea  value={content} onChange={(e)=>setContent(e.target.value)}
-                className='indent-2 relative h-24  w-full rounded-md'  placeholder="What's happening?"
+                className='resize-none indent-2 relative  w-full '  placeholder="What's happening?"
                 />
 
 
-        <hr></hr>
         <div className="flex items-center justify-between p-2">
             <input className=" w-1/2 text-xs block  text-gray-700 file:rounded-sm file:bg-emerald-600 file:text-white file:border-none file:shadow-none"
             type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} content="gay"  />
@@ -62,7 +65,6 @@ export default function PeepForm(props){
 
         </div>
       
-    
     
             </div>
      

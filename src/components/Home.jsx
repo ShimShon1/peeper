@@ -11,6 +11,7 @@ export default function Home(props){
 
 
     const peepElms = peepsObjects.map((peep)=>{
+      console.log(peep)
       return(
      
         <Peep updatePeepsList={updatePeepsList} peep={peep} user={props.user} />
