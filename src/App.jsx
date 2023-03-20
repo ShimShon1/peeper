@@ -28,7 +28,9 @@ export default function App() {
     }))
   }
 
-  useEffect(()=>updatePeepsList,[])
+  useEffect(()=>{
+    updatePeepsList()
+  },[])
 
 
   const peepRoutes = peepsObjects.map(peep=><Route key={peep.docId}  path={peep.docId} element={<PeepPage user={user} peep={peep} updatePeepsList={updatePeepsList} />} />)
