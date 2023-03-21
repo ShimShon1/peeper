@@ -2,6 +2,7 @@ import { addDoc,collection, serverTimestamp } from "firebase/firestore";
 import { useState } from "react"
 import { db,storage } from "../config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import SubmitBtn from "./SubmitBtn";
 
 
 export default function PeepForm(props){
@@ -26,9 +27,9 @@ export default function PeepForm(props){
         await addDoc(collection(db, "peeps"), {
           content:content,
           comments:[],
-          imgLink: imgLink,
           likedBy:[],
           timestamp:serverTimestamp(),
+          imgLink: imgLink,
           userPosted :{
               uid : props.user.uid,
               photoURL: props.user.photoURL,
@@ -47,7 +48,7 @@ export default function PeepForm(props){
 
     return(
 
-        <form className="w-full flex gap-3  space-y-4" onSubmit={(e)=>addPeep(e)}>
+        <form className="w-full flex gap-3  p-4 lg:p-8 lg:pb-2 space-y-4 border-b" onSubmit={(e)=>addPeep(e)}>
 
         <div className="">
             <img className="rounded-[50%] h-14  " src={user.photoURL} alt="profile-pic" />
@@ -56,7 +57,7 @@ export default function PeepForm(props){
 
             <div className="pt-3 flex-grow text-xl">
                 <textarea  value={content} onChange={(e)=>setContent(e.target.value)}
-                className='resize-none indent-2 relative  w-full '  placeholder="What's happening?"
+                className='resize-none indent-2 relative focus:outline-none  w-full '  placeholder="What's happening?"
                 />
 
 
@@ -65,9 +66,8 @@ export default function PeepForm(props){
             type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} content="gay"  />
 
 
-            <button 
-            className="p-1 px-3  bg-emerald-600 text-white rounded-[15px] hover:bg-emerald-800"
-            >Peep</button>
+            
+            <SubmitBtn content={"Peep"}/>
 
         </div>
       

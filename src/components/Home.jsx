@@ -2,7 +2,7 @@ import Peep from './Peep';
 import PeepForm from './PeepForm';
 
 
-export default function Home({updatePeepsList,peepsObjects,likePeep,user,}){
+export default function Home({updatePeepsList,peepsObjects,likePeep,user,deletePeep}){
  
 
 
@@ -11,7 +11,7 @@ export default function Home({updatePeepsList,peepsObjects,likePeep,user,}){
       console.log(peep)
       return(
      
-        <Peep likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep} user={user} />
+        <Peep deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep} user={user} />
   
       )
     })

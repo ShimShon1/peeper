@@ -1,21 +1,38 @@
-import { addDoc,collection,doc,updateDoc } from "firebase/firestore";
+import { addDoc,collection,doc,serverTimestamp,updateDoc } from "firebase/firestore";
 import { useState } from "react"
 import { db } from "../config";
+import Peep from "./Peep";
+import PeepContent from "./PeepContent";
+import SubmitBtn from "./SubmitBtn";
+import trashIcon from "../../src/images/trash.svg"
+import likeIcon from "../../src/images/like.svg"
+import commentIcon from "../../src/images/comment.svg"
+import likeIconGreen from "../../src/images/likeGreen.svg"
+import { Link } from "react-router-dom";
 
-export default function PeepPage({peep,updatePeepsList,user}){
+
+
+export default function PeepPage({peep,updatePeepsList,user,likePeep,deletePeep}){
     const[newComment,setNewComment] = useState('')
 
 
 
     const peepRef = doc(db,"peeps",peep.docId)
 
-    async function addComment(){
+    console.log(peep.likedBy)
+    async function addComment(e){
+        e.preventDefault()
         await updateDoc(peepRef,{
             comments:[
                 ...peep.comments,
                 {
                     content:newComment,
-                    uid:user.uid,
+                    userPosted :{
+                        uid : user.uid,
+                        photoURL: user.photoURL,
+                        displayName: user.displayName,
+          
+                    }
                 }
             ]
         }
@@ -23,26 +40,27 @@ export default function PeepPage({peep,updatePeepsList,user}){
 
 
     updatePeepsList()
+    setNewComment('')
+
     }
 
 
 
     async function deleteComment(content){
-        console.log(content,"content")
         await updateDoc(peepRef,{
-            comments: peep.comments.filter((comment)=>content === comment.content && comment.uid === user.uid? false:true)
+            comments: peep.comments.filter((comment)=>content === comment.content && comment.userPosted.uid === user.uid? false:true)
         }
        )
-
 
     updatePeepsList()
     }
     const commentElms = peep.comments.map((comment)=>{
         return(
-            <div>
-                <p> {comment.content} </p>
-                <button onClick={() => deleteComment(comment.content)}
-                className='border'>Delete</button>
+            <div className="border-b">
+                <PeepContent   peep={comment} user={user} deleteComment={() => deleteComment(comment.content)} />
+
+                <img src={trashIcon} onClick={() => deleteComment(comment.content)}
+                className='absolute bottom-0 right-0 p-4 cursor-pointer' alt="trash Icon" />
 
 
             </div>
@@ -50,29 +68,55 @@ export default function PeepPage({peep,updatePeepsList,user}){
     }
     )
 
+    let liked = peep.likedBy.includes(user.uid)
+
 
     return(
         
+        <>
         
-            <div className='p-2 border-b-2 border-black space-y-3'>
-            <p>{peep.content}</p>
-            <hr></hr>
-            
-            {peep.imgLink && <img className="max-h-40 border-2 p-2" src={peep.imgLink} alt="" />}
-            <span className="text-sm">{commentElms}</span>
-            <div className='text-sm mt-4 space-y-2'>
-            <hr></hr>
-            <label className='inline-block ' >Comment: <input onChange={(e)=>setNewComment(e.target.value)} value={newComment}
-            className='border' type="text" /></label>
-            <button onClick={addComment}
-            className='border'>Send</button>
+            <PeepContent peep={peep}/>
 
+            <div className="ml-[72px] text-sm space-x-4 px-4 lg:px-8 pb-2">
+                <span> <span className="font-semibold">{peep.comments.length}</span> {peep.comments.length > 1? 'Comments':"Comment"}</span> 
+                <span> <span className="font-semibold">{peep.likedBy.length}</span> {peep.likedBy.length > 1? 'Likes':"Like"}</span> 
 
-           
-            
             </div>
-        </div>
-        
 
-    )
+            <hr />
+            <div className="flex ml-[72px] p-4  justify-around w-3/4 ">
+                     <img src={commentIcon} alt="" />
+                     <img src={liked? likeIconGreen:likeIcon} onClick={()=>likePeep(peep)} alt="" />
+                     {peep.userPosted.uid === user.uid ? 
+                       <Link to={"/"}> <img src={trashIcon} onClick={()=>deletePeep(peep)} alt="" /></Link>
+                     : <div className="w-[12px]  "></div>}
+            </div>
+
+
+            <form className="w-full flex p-4 lg:p-8 border-t pb-2 lg:pb-2" onSubmit={(e)=>addComment(e)}>
+            <hr />
+                <div className="">
+                    <img className="rounded-[50%] h-14  " src={user.photoURL} alt="profile-pic" />
+                </div>
+                    <div className="pt-3 flex-grow text-xl">
+                        <textarea  onChange={(e)=>setNewComment(e.target.value)} value={newComment}
+                        className='resize-none indent-2 relative  w-full  focus:outline-none'  placeholder="Peep your reply"
+                        />
+                <div className="flex items-center justify-end ">
+                    <div>
+                        <SubmitBtn content={"Reply"}/>
+
+                    </div>
+                </div>
+                    </div>
+                </form>
+            <hr />
+            {commentElms}
+        </>
+        
+        
+       
+        
+        
+        )
 }

@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, orderBy, query, serverTimestamp, updateDoc} from "firebase/firestore"
+import { collection, deleteDoc, doc, getDocs, orderBy, query, serverTimestamp, updateDoc} from "firebase/firestore"
 import { useEffect, useState, } from "react"
 import { Route, Routes,useLocation } from "react-router-dom"
 import Home from "./components/Home"
@@ -42,7 +42,7 @@ export default function App() {
   },[])
 
 
-  const peepRoutes = peepsObjects.map(peep=><Route key={peep.docId}  path={peep.docId} element={<PeepPage user={user} peep={peep} updatePeepsList={updatePeepsList} />} />)
+  const peepRoutes = peepsObjects.map(peep=><Route key={peep.docId}  path={peep.docId} element={<PeepPage deletePeep={deletePeep} likePeep={likePeep} user={user} peep={peep} updatePeepsList={updatePeepsList} />} />)
 
 
 
@@ -75,15 +75,20 @@ export default function App() {
   }
 
 
+  async function deletePeep(peep){
+    await deleteDoc(doc(db, "peeps", peep.docId));
+    updatePeepsList()
+
+}
 
   async function likePeep(peep){
+    console.log(peep,"pepppp")
     const peepRef = doc(db,"peeps",peep.docId)
 
     await updateDoc(peepRef,{
         likedBy: !peep.likedBy.some((like)=>like === user.uid)?[...peep.likedBy, user.uid]: peep.likedBy.filter((like)=> user.uid !== like)
     }
    )
-
 
 updatePeepsList()
 
@@ -116,16 +121,14 @@ updatePeepsList()
     </header>
     <LoginPrompt login={login} user={user}/>
 
-    <main className="App p-4   m-auto relative mb-[68px] z-1 col-start-2 col-span-3 w-full border-l border-r
+    <main className="App   m-auto relative mb-[68px] z-1 col-start-2 col-span-3 w-full border-l border-r
     
-      lg:col-span-4 lg:p-8
+      lg:col-span-4 
     
     
     ">
-
-
       <Routes>
-          <Route path="/" element={<Home user={user} likePeep={likePeep} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
+          <Route path="/" element={<Home user={user} likePeep={likePeep} deletePeep={deletePeep} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
           <Route path="/profile" element={ <h1>Profile</h1>} />
           {peepRoutes}
       </Routes>
