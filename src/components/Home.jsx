@@ -2,11 +2,8 @@ import Peep from './Peep';
 import PeepForm from './PeepForm';
 
 
-export default function Home(props){
-    const updatePeepsList = props.updatePeepsList
-    const peepsObjects = props.peepsObjects
-   
-
+export default function Home({updatePeepsList,peepsObjects,likePeep,user,}){
+ 
 
 
 
@@ -14,14 +11,14 @@ export default function Home(props){
       console.log(peep)
       return(
      
-        <Peep updatePeepsList={updatePeepsList} peep={peep} user={props.user} />
+        <Peep likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep} user={user} />
   
       )
     })
   
     return(
         <>
-            {props.user && <PeepForm user={props.user} updatePeepsList={updatePeepsList}/>}
+            {user && <PeepForm user={user} updatePeepsList={updatePeepsList}/>}
             {peepElms}
         
         </>

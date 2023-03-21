@@ -1,4 +1,4 @@
-import { doc,deleteDoc, } from "firebase/firestore";
+import { doc,deleteDoc, updateDoc, } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import {  db } from "../config";
 
@@ -12,9 +12,8 @@ import trashIcon from "../../src/images/trash.svg"
 
 
 
-export default function Peep({peep,user,updatePeepsList}){
+export default function Peep({peep,user,updatePeepsList,likePeep}){
 
-    const peepRef = doc(db,"peeps",peep.docId)
 
 
 
@@ -24,8 +23,8 @@ export default function Peep({peep,user,updatePeepsList}){
 
     }
 
+  
 
-    console.log(user,peep)
     return(
         <>
         <Link to={peep.docId}>
@@ -53,14 +52,13 @@ export default function Peep({peep,user,updatePeepsList}){
         <div className="flex ml-[68px] pt-2 pb-4 w-2/3 justify-between">
 
                     
-        <Link to={peep.docId}> <div className="flex items-center gap-2 text-xs cursor-pointer "><img className="h-4" src={commentIcon} alt="" /> 3</div></Link>
-            <div className="flex items-center gap-2 text-xs cursor-pointer"><img className="h-4" src={likeIcon} alt="" /> 15</div>
+        <Link to={peep.docId}> <div className="flex items-center gap-2 text-xs cursor-pointer "><img className="h-4" src={commentIcon} alt="" /> {peep.comments.length}</div></Link>
+            <div className="flex items-center gap-2 text-xs cursor-pointer"><img className="h-4" onClick={()=>likePeep(peep)} src={likeIcon} alt="" /> {peep.likedBy.length}</div>
             <div> {peep.userPosted.uid === user.uid ? <img className="h-4 cursor-pointer"  onClick={deletePeep} src={trashIcon} alt="" /> : <div></div>}</div>
 
 
         </div>
 
-         {/* <button onClick={deletePeep}>Delete</button> */}
 
     </>
 

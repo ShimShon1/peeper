@@ -1,4 +1,4 @@
-import { addDoc,collection } from "firebase/firestore";
+import { addDoc,collection, serverTimestamp } from "firebase/firestore";
 import { useState } from "react"
 import { db,storage } from "../config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -27,10 +27,13 @@ export default function PeepForm(props){
           content:content,
           comments:[],
           imgLink: imgLink,
+          likedBy:[],
+          timestamp:serverTimestamp(),
           userPosted :{
               uid : props.user.uid,
               photoURL: props.user.photoURL,
-              displayName: props.user.displayName
+              displayName: props.user.displayName,
+
           }
         });
     

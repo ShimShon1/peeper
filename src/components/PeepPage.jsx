@@ -30,7 +30,7 @@ export default function PeepPage({peep,updatePeepsList,user}){
     async function deleteComment(content){
         console.log(content,"content")
         await updateDoc(peepRef,{
-            comments: peep.comments.filter((comment)=>content == comment.content && comment.uid == user.uid? false:true)
+            comments: peep.comments.filter((comment)=>content === comment.content && comment.uid === user.uid? false:true)
         }
        )
 

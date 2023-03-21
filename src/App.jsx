@@ -1,4 +1,4 @@
-import { collection, getDocs} from "firebase/firestore"
+import { collection, doc, getDocs, orderBy, query, serverTimestamp, updateDoc} from "firebase/firestore"
 import { useEffect, useState, } from "react"
 import { Route, Routes,useLocation } from "react-router-dom"
 import Home from "./components/Home"
@@ -19,9 +19,14 @@ export default function App() {
   console.log(currentPath)
 
   async function updatePeepsList(){
-    let peepsRef = await getDocs(collection(db, "peeps"));
     
-    setPeepsObjects( peepsRef.docs.map((doc) => {
+    const q = query(collection(db, "peeps"), orderBy("timestamp","desc"));
+
+    console.log(q)
+    let peepsRef = await getDocs(q);
+    
+
+    setPeepsObjects(peepsRef.docs.map((doc) => {
       
       return {
         ...doc.data(),
@@ -70,6 +75,23 @@ export default function App() {
   }
 
 
+
+  async function likePeep(peep){
+    const peepRef = doc(db,"peeps",peep.docId)
+
+    await updateDoc(peepRef,{
+        likedBy: !peep.likedBy.some((like)=>like === user.uid)?[...peep.likedBy, user.uid]: peep.likedBy.filter((like)=> user.uid !== like)
+    }
+   )
+
+
+updatePeepsList()
+
+}
+
+
+
+
  
   return (
 
@@ -103,7 +125,7 @@ export default function App() {
 
 
       <Routes>
-          <Route path="/" element={<Home user={user} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
+          <Route path="/" element={<Home user={user} likePeep={likePeep} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
           <Route path="/profile" element={ <h1>Profile</h1>} />
           {peepRoutes}
       </Routes>
