@@ -9,6 +9,7 @@ import PeepPage from "./components/PeepPage"
 import { auth, db, googleProvider } from "./config"
 import {signInWithPopup,  onAuthStateChanged } from "firebase/auth";
 import Title from "./components/Title"
+import Profile from "./components/Profile"
 
 export default function App() {
   const [peepsObjects,setPeepsObjects] = useState([])
@@ -16,13 +17,11 @@ export default function App() {
 
   let currentPath = useLocation().pathname
 
-  console.log(currentPath)
 
   async function updatePeepsList(){
     
     const q = query(collection(db, "peeps"), orderBy("timestamp","desc"));
 
-    console.log(q)
     let peepsRef = await getDocs(q);
     
 
@@ -53,14 +52,12 @@ export default function App() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         setUser(user)
-        console.log("hey")
 
         // ...
       } else {
         // User is signed out
         // ...
         setUser(false)
-        console.log("bye")
       }
     });
   
@@ -69,7 +66,6 @@ export default function App() {
 
   async function login(){
    const response = await signInWithPopup(auth, googleProvider)
-   console.log(response.user)
 
 
   }
@@ -82,7 +78,6 @@ export default function App() {
 }
 
   async function likePeep(peep){
-    console.log(peep,"pepppp")
     const peepRef = doc(db,"peeps",peep.docId)
 
     await updateDoc(peepRef,{
@@ -129,7 +124,7 @@ updatePeepsList()
     ">
       <Routes>
           <Route path="/" element={<Home user={user} likePeep={likePeep} deletePeep={deletePeep} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
-          <Route path="/profile" element={ <h1>Profile</h1>} />
+          <Route path="/profile" element={ <Profile  user={user}/>} />
           {peepRoutes}
       </Routes>
 
