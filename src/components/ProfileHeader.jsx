@@ -6,13 +6,13 @@ export default function ProfileHeader({user}){
 
 
     return(
-        <div className="min-h-screen">
-        <div className="h-screen grid grid-rows-[20%,20%] relative ">
+        <div className=" ">
+        <div className=" relative   ">
 
-         <img className="w-full h-full" src={coverImg} alt="" />
+         <img className="w-full h-28 lg:h-44" src={coverImg} alt="" />
          <div className="p-4 lg:p-8  shadow-sm flex flex-col justify-around border-b">
 
-            <img className="rounded-[50%] absolute top-[12%] lg:top-[13%] "
+            <img className="rounded-[50%] absolute top-10 lg:top-1/3 "
             src={user.photoURL} alt="User Profile"/>
 
             <div className="flex justify-between">

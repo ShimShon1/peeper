@@ -124,7 +124,7 @@ updatePeepsList()
     ">
       <Routes>
           <Route path="/" element={<Home user={user} likePeep={likePeep} deletePeep={deletePeep} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
-          <Route path="/profile" element={ <Profile  user={user}/>} />
+          <Route path="/profile" element={ <Profile  user={user} deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList}/>} />
           {peepRoutes}
       </Routes>
 
