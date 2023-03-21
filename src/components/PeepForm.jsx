@@ -12,13 +12,16 @@ export default function PeepForm(props){
      async function addPeep(e){
         e.preventDefault()
 
-        const storageRef = ref(storage, `images/${newImg.name + Math.floor( Math.random() * 100000)}`);
+        let imgLink = false
 
 
-        await uploadBytes(storageRef, newImg)
+        if(newImg){
+            const storageRef = ref(storage, `images/${newImg.name + Math.floor( Math.random() * 100000)}`);
+            await uploadBytes(storageRef, newImg)
+            imgLink = await getDownloadURL(storageRef)
 
-
-        const imgLink = await getDownloadURL(storageRef)
+        }
+        
 
         await addDoc(collection(db, "peeps"), {
           content:content,
@@ -44,7 +47,7 @@ export default function PeepForm(props){
         <form className="w-full flex gap-3  space-y-4" onSubmit={(e)=>addPeep(e)}>
 
         <div className="">
-            <img className="rounded-[50%] h-14" src={user.photoURL} alt="profile-pic" />
+            <img className="rounded-[50%] h-14  " src={user.photoURL} alt="profile-pic" />
         </div>
         
 
@@ -55,12 +58,12 @@ export default function PeepForm(props){
 
 
         <div className="flex items-center justify-between p-2">
-            <input className=" w-1/2 text-xs block  text-gray-700 file:rounded-sm file:bg-emerald-600 file:text-white file:border-none file:shadow-none"
+            <input className="cursor-pointer w-1/2 text-xs block   text-gray-700 file:rounded-sm file:bg-emerald-600 file:text-white file:border-none file:shadow-none"
             type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} content="gay"  />
 
 
             <button 
-            className="p-1 px-2  bg-emerald-600 text-white rounded-lg "
+            className="p-1 px-3  bg-emerald-600 text-white rounded-[15px] hover:bg-emerald-800"
             >Peep</button>
 
         </div>
