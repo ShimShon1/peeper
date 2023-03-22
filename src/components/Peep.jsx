@@ -1,6 +1,4 @@
-import { doc,deleteDoc, updateDoc, } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import {  db } from "../config";
 
 import likeIcon from "../../src/images/like.svg"
 import likeIconGreen from "../../src/images/likeGreen.svg"
@@ -14,14 +12,7 @@ import PeepContent from "./PeepContent";
 
 
 export default function Peep({peep,user,updatePeepsList,likePeep,deleteComment,deletePeep}){
-
-    console.log(likePeep)
-
-
- 
-
     let liked = peep.likedBy.includes(user.uid)
-    console.log(liked)
 
     return(
         <div className="border-b  pb-2 lg:pb-2 ">

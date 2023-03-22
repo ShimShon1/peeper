@@ -1,7 +1,6 @@
-import { addDoc,collection,doc,serverTimestamp,updateDoc } from "firebase/firestore";
+import { doc,updateDoc } from "firebase/firestore";
 import { useState } from "react"
 import { db } from "../config";
-import Peep from "./Peep";
 import PeepContent from "./PeepContent";
 import SubmitBtn from "./SubmitBtn";
 import trashIcon from "../../src/images/trash.svg"
@@ -19,7 +18,6 @@ export default function PeepPage({peep,updatePeepsList,user,likePeep,deletePeep}
 
     const peepRef = doc(db,"peeps",peep.docId)
 
-    console.log(peep.likedBy)
     async function addComment(e){
         e.preventDefault()
         await updateDoc(peepRef,{
@@ -58,11 +56,8 @@ export default function PeepPage({peep,updatePeepsList,user,likePeep,deletePeep}
         return(
             <div className="border-b">
                 <PeepContent   peep={comment} user={user} deleteComment={() => deleteComment(comment.content)} />
-
                 <img src={trashIcon} onClick={() => deleteComment(comment.content)}
                 className='absolute bottom-0 right-0 p-4 cursor-pointer' alt="trash Icon" />
-
-
             </div>
         ) 
     }

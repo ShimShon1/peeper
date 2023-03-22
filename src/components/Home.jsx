@@ -4,9 +4,6 @@ import PeepForm from './PeepForm';
 
 export default function Home({updatePeepsList,peepsObjects,likePeep,user,deletePeep}){
  
-
-
-
     const peepElms = peepsObjects.map((peep)=>{
       console.log(peep)
       return(
@@ -16,6 +13,7 @@ export default function Home({updatePeepsList,peepsObjects,likePeep,user,deleteP
       )
     })
   
+    
     return(
         <>
             {user && <PeepForm user={user} updatePeepsList={updatePeepsList}/>}

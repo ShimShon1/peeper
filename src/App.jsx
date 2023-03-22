@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, orderBy, query, serverTimestamp, updateDoc} from "firebase/firestore"
+import { collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc} from "firebase/firestore"
 import { useEffect, useState, } from "react"
 import { Route, Routes,useLocation } from "react-router-dom"
 import Home from "./components/Home"
@@ -21,19 +21,25 @@ export default function App() {
   async function updatePeepsList(){
     
     const q = query(collection(db, "peeps"), orderBy("timestamp","desc"));
-
-    let peepsRef = await getDocs(q);
     
+      try{
+        let peepsRef = await getDocs(q);
 
-    setPeepsObjects(peepsRef.docs.map((doc) => {
+      setPeepsObjects(peepsRef.docs.map((doc) => {
+        
+        return {
+          ...doc.data(),
+          docId:doc.id,
+
+        }
       
-      return {
-        ...doc.data(),
-        docId:doc.id,
+      }))
 
-      }
+    }catch(e){
+      console.error(e)
+    }
     
-    }))
+
   }
 
   useEffect(()=>{
@@ -65,25 +71,34 @@ export default function App() {
   },[])
 
   async function login(){
-   const response = await signInWithPopup(auth, googleProvider)
-
-
+    try{
+      const response = await signInWithPopup(auth, googleProvider)
+    }catch(e){
+      console.error(e)
+    }
   }
 
 
   async function deletePeep(peep){
-    await deleteDoc(doc(db, "peeps", peep.docId));
+    try{
+      await deleteDoc(doc(db, "peeps", peep.docId));
+    }catch(e){
+      console.error(e)
+    }
     updatePeepsList()
 
 }
 
   async function likePeep(peep){
-    const peepRef = doc(db,"peeps",peep.docId)
+    try{
+      const peepRef = doc(db,"peeps",peep.docId)
+      await updateDoc(peepRef,{
+          likedBy: !peep.likedBy.some((like)=>like === user.uid)?[...peep.likedBy, user.uid]: peep.likedBy.filter((like)=> user.uid !== like)
+        })
 
-    await updateDoc(peepRef,{
-        likedBy: !peep.likedBy.some((like)=>like === user.uid)?[...peep.likedBy, user.uid]: peep.likedBy.filter((like)=> user.uid !== like)
+    }catch(e){
+      console.error(e)
     }
-   )
 
 updatePeepsList()
 
