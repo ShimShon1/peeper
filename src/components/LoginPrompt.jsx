@@ -1,5 +1,8 @@
-export default function Nav({login,user}){
+import { useContext } from "react"
+import { AppContext } from "../App"
 
+export default function Nav({login}){
+    const {user} = useContext(AppContext)
 
     return(
         <>

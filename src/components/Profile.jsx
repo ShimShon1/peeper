@@ -1,20 +1,21 @@
 
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../App";
 import { db } from "../config";
 import Peep from "./Peep";
 import ProfileHeader from "./ProfileHeader"
 
 
-export default function Profile({user,deletePeep,likePeep,updatePeepsList}){
+export default function Profile({deletePeep,likePeep,updatePeepsList}){
     const [userPeeps,setUserPeeps] = useState([])
 
-
+    const {user} = useContext(AppContext)
 
 
     async function getUserPeeps(){
         try{
-            
+
             const q = query(collection(db, "peeps"), where("userPosted.uid", "==", user.uid));
             let peepsRef = await getDocs(q);
             setUserPeeps(peepsRef.docs.map((doc) => {
@@ -30,7 +31,6 @@ export default function Profile({user,deletePeep,likePeep,updatePeepsList}){
         }catch(e){
             console.error(e)
         }
-        console.log("run")
     
       }
 
@@ -54,7 +54,7 @@ export default function Profile({user,deletePeep,likePeep,updatePeepsList}){
     return (
         <div className="flex flex-col">
         
-            <ProfileHeader user={user}/>
+            <ProfileHeader />
             
 
                 {peepElms}

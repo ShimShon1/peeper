@@ -1,14 +1,16 @@
+import { useContext } from 'react';
+import { AppContext } from '../App';
 import Peep from './Peep';
 import PeepForm from './PeepForm';
 
 
-export default function Home({updatePeepsList,peepsObjects,likePeep,user,deletePeep}){
- 
+export default function Home({updatePeepsList,peepsObjects,likePeep,deletePeep}){
+   const {user} = useContext(AppContext)
+
     const peepElms = peepsObjects.map((peep)=>{
-      console.log(peep)
       return(
      
-        <Peep deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep} user={user} />
+        <Peep deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep}/>
   
       )
     })
@@ -16,7 +18,7 @@ export default function Home({updatePeepsList,peepsObjects,likePeep,user,deleteP
     
     return(
         <>
-            {user && <PeepForm user={user} updatePeepsList={updatePeepsList}/>}
+            {user && <PeepForm  updatePeepsList={updatePeepsList}/>}
             {peepElms}
         
         </>

@@ -6,12 +6,15 @@ import likeIconGreen from "../../src/images/likeGreen.svg"
 import commentIcon from "../../src/images/comment.svg"
 import trashIcon from "../../src/images/trash.svg"
 import PeepContent from "./PeepContent";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
 
 
 
 
-export default function Peep({peep,user,updatePeepsList,likePeep,deleteComment,deletePeep}){
+export default function Peep({peep,likePeep,deletePeep}){
+    const {user} = useContext(AppContext)
     let liked = peep.likedBy.includes(user.uid)
 
     return(

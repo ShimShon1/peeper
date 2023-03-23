@@ -1,13 +1,16 @@
 import { addDoc,collection, serverTimestamp } from "firebase/firestore";
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { db,storage } from "../config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import SubmitBtn from "./SubmitBtn";
+import { AppContext } from "../App";
 
 
 export default function PeepForm(props){
      const [content,setContent] = useState("")
      const [newImg,setNewImg] = useState(false)
+
+    const {user} = useContext(AppContext)
 
 
      async function addPeep(e){
@@ -31,9 +34,9 @@ export default function PeepForm(props){
           timestamp:serverTimestamp(),
           imgLink: imgLink,
           userPosted :{
-              uid : props.user.uid,
-              photoURL: props.user.photoURL,
-              displayName: props.user.displayName,
+              uid : user.uid,
+              photoURL: user.photoURL,
+              displayName: user.displayName,
 
           }
         });
@@ -43,7 +46,6 @@ export default function PeepForm(props){
       }
 
 
-      const user = props.user
 
 
     return(

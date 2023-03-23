@@ -1,5 +1,5 @@
 import { doc,updateDoc } from "firebase/firestore";
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { db } from "../config";
 import PeepContent from "./PeepContent";
 import SubmitBtn from "./SubmitBtn";
@@ -8,13 +8,14 @@ import likeIcon from "../../src/images/like.svg"
 import commentIcon from "../../src/images/comment.svg"
 import likeIconGreen from "../../src/images/likeGreen.svg"
 import { Link } from "react-router-dom";
+import { AppContext } from "../App";
 
 
 
-export default function PeepPage({peep,updatePeepsList,user,likePeep,deletePeep}){
+export default function PeepPage({peep,updatePeepsList,likePeep,deletePeep}){
     const[newComment,setNewComment] = useState('')
 
-
+    const {user} = useContext(AppContext)
 
     const peepRef = doc(db,"peeps",peep.docId)
 
@@ -55,7 +56,7 @@ export default function PeepPage({peep,updatePeepsList,user,likePeep,deletePeep}
     const commentElms = peep.comments.map((comment)=>{
         return(
             <div className="border-b">
-                <PeepContent   peep={comment} user={user} deleteComment={() => deleteComment(comment.content)} />
+                <PeepContent   peep={comment}  deleteComment={() => deleteComment(comment.content)} />
                 <img src={trashIcon} onClick={() => deleteComment(comment.content)}
                 className='absolute bottom-0 right-0 p-4 cursor-pointer' alt="trash Icon" />
             </div>

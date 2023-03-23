@@ -1,9 +1,12 @@
 
+import { useContext } from "react"
 import coverImg from "../../src/images/cover.avif"
+import { AppContext } from "../App"
 
 
-export default function ProfileHeader({user}){
+export default function ProfileHeader(){
 
+    const {user} = useContext(AppContext)
 
     return(
         <div className=" ">

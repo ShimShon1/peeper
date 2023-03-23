@@ -6,18 +6,24 @@ import homeIcon from "../../src/images/home.svg"
 import loginIcon from "../../src/images/log-in.svg"
 import logoutIcon from "../../src/images/log-out.svg"
 import profileIcon from "../../src/images/profile.svg"
+import { useContext } from "react";
+import {AppContext} from "../App"
+
+
+export default function Nav({login}){
+let {user} = useContext(AppContext)
 
 
 
-export default function Nav({login,user}){
-    console.log(login)
-  async function logout(){
-
-    await signOut(auth)
+async function logout(){
+    try{
+        await signOut(auth)
+    }catch(e){
+        console.error(e)
+    }
 
     
    }
-
 
     return(
         <nav className={`${!user && "hidden md:flex "} flex 

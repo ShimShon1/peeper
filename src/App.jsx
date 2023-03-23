@@ -1,5 +1,5 @@
 import { collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc} from "firebase/firestore"
-import { useEffect, useState, } from "react"
+import { createContext, useEffect, useState, } from "react"
 import { Route, Routes,useLocation } from "react-router-dom"
 import Home from "./components/Home"
 import Nav from "./components/Nav"
@@ -11,8 +11,15 @@ import {signInWithPopup,  onAuthStateChanged } from "firebase/auth";
 import Title from "./components/Title"
 import Profile from "./components/Profile"
 
+
+
+
+export const AppContext = createContext(null)
+
+
 export default function App() {
   const [peepsObjects,setPeepsObjects] = useState([])
+  
   const [user,setUser] = useState(false)
 
   let currentPath = useLocation().pathname
@@ -55,14 +62,11 @@ export default function App() {
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
+        // User is signed in
         setUser(user)
 
-        // ...
       } else {
         // User is signed out
-        // ...
         setUser(false)
       }
     });
@@ -104,47 +108,49 @@ updatePeepsList()
 
 }
 
+return (
+  <AppContext.Provider value={{user}}>
 
-
-
- 
-  return (
-
-    <div className="w-full h-full md:grid grid-cols-5 
-    
-      lg:grid-cols-9
-    ">
+      <div className="w-full h-full md:grid grid-cols-5 
       
-    <Title path={currentPath} />
+        lg:grid-cols-9
+      ">
+        
+      <Title path={currentPath} />
 
-    <header className="fixed w-full z-10 bottom-0
-    
-    
-      md:relative md:h-full md:flex md:justify-end 
+      <header className="fixed w-full z-10 bottom-0
+      
+      
+        md:relative md:h-full md:flex md:justify-end 
 
-      lg:col-span-2 lg:px-8
-    ">
-
-       <Nav login={login} user={user}/>
+        lg:col-span-2 lg:px-8
+      ">
 
 
-    </header>
-    <LoginPrompt login={login} user={user}/>
 
-    <main className="App   m-auto relative mb-[68px] z-1 col-start-2 col-span-3 w-full border-l border-r
-    
-      lg:col-span-4 
-    
-    
-    ">
-      <Routes>
-          <Route path="/" element={<Home user={user} likePeep={likePeep} deletePeep={deletePeep} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
-          <Route path="/profile" element={ <Profile  user={user} deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList}/>} />
-          {peepRoutes}
-      </Routes>
+      <Nav login={login} />
 
-    </main>
-    </div>
+
+
+      </header>
+      <LoginPrompt login={login} />
+
+      <main className="App   m-auto relative mb-[68px] z-1 col-start-2 col-span-3 w-full border-l border-r
+      
+        lg:col-span-4 
+      
+      
+      ">
+        <Routes>
+            <Route path="/" element={<Home likePeep={likePeep} deletePeep={deletePeep} peepsObjects={peepsObjects} updatePeepsList={updatePeepsList}/>} />
+            <Route path="/profile" element={ <Profile   deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList}/>} />
+            {peepRoutes}
+        </Routes>
+
+      </main>
+      </div>
+  </AppContext.Provider>
+
   )
 }
 
