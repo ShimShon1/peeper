@@ -2,16 +2,17 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
-import { db } from "../config";
+import {  db } from "../config";
 import Peep from "./Peep";
 import ProfileHeader from "./ProfileHeader"
 
 
 export default function Profile({deletePeep,likePeep,updatePeepsList}){
     const [userPeeps,setUserPeeps] = useState([])
-
+    
     const {user} = useContext(AppContext)
 
+    
 
     async function getUserPeeps(){
         try{
@@ -37,6 +38,7 @@ export default function Profile({deletePeep,likePeep,updatePeepsList}){
 
 
       useEffect(()=>{
+      
         getUserPeeps()
       },[])
 

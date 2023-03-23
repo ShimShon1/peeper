@@ -61,7 +61,8 @@ export default function PeepForm(props){
 
 
             <div className="flex items-center justify-between ">
-                <input id="files" className="hidden md:block cursor-pointer text-xs  text-gray-700 file:rounded-sm file:bg-emerald-600 file:text-white file:border-none file:shadow-none"
+                <input id="files" className="hidden md:block cursor-pointer text-xs  text-gray-700 file:rounded-sm file:bg-emerald-600
+                 file:text-white file:border-none file:shadow-none file:cursor-pointer"
                 type="file" onChange={(e)=>setNewImg(e.target.files[0])} file={newImg} content="gay"  />
 
             <label className="cursor-pointer text-xs p-1   rounded-sm bg-emerald-600 text-white border-none shadow-none md:hidden" htmlFor="files">Select file</label>

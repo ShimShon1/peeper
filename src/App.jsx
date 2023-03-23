@@ -109,7 +109,7 @@ export default function App() {
 }
 
 return (
-  <AppContext.Provider value={{user}}>
+  <AppContext.Provider value={{user,setUser}}>
 
     <div className="md:grid grid-cols-5  xl:grid-cols-9">
         
