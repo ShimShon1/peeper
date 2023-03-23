@@ -27,7 +27,7 @@ export default function ProfileHeader(){
            
 
             <p>
-                A very simple man!
+                Yes, that's my bio
             </p>
          </div>
         </div>
