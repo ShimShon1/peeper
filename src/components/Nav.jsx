@@ -26,7 +26,8 @@ async function logout(){
    }
 
     return(
-        <nav className={`${!user && "hidden md:flex "} flex 
+        <nav className={`${!user && "hidden md:flex "}
+         flex 
         justify-around p-4 shadow-sm bg-white items-center
         
             md:flex-col  md:px-6  md:shadow-none

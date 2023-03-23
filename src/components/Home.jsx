@@ -10,7 +10,7 @@ export default function Home({updatePeepsList,peepsObjects,likePeep,deletePeep})
     const peepElms = peepsObjects.map((peep)=>{
       return(
      
-        <Peep deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep}/>
+        <Peep deletePeep={deletePeep} key={peep.docId} likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep}/>
   
       )
     })

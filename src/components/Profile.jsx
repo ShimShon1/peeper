@@ -46,7 +46,15 @@ export default function Profile({deletePeep,likePeep,updatePeepsList}){
       const peepElms = userPeeps.map((peep)=>{
         return(
        
-          <Peep deletePeep={deletePeep}  likePeep={likePeep} updatePeepsList={updatePeepsList} peep={peep} user={user} />
+          <Peep deletePeep={()=>{
+              deletePeep(peep)
+              getUserPeeps()
+            }
+          }  
+          likePeep={()=>{
+            likePeep(peep)
+            getUserPeeps()
+          }} updatePeepsList={updatePeepsList} peep={peep} user={user} />
     
         )
       })

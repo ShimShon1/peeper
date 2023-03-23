@@ -104,35 +104,30 @@ export default function App() {
       console.error(e)
     }
 
-updatePeepsList()
+  updatePeepsList()
 
 }
 
 return (
   <AppContext.Provider value={{user}}>
 
-      <div className="w-full h-full md:grid grid-cols-5 
-      
-        lg:grid-cols-9
-      ">
+    <div className="md:grid grid-cols-5  xl:grid-cols-9">
         
       <Title path={currentPath} />
 
-      <header className="fixed w-full z-10 bottom-0
-      
-      
-        md:relative md:h-full md:flex md:justify-end 
-
-        lg:col-span-2 lg:px-8
-      ">
-
-
+      <header className="xl:col-start-2
+      fixed w-full z-10 bottom-0 md:relative"
+      >
+      {/* "fixed w-full z-10 bottom-0
+      md:relative md:h-full md:flex md:justify-end 
+      lg:col-span-2 lg:px-8
+    " */}
 
       <Nav login={login} />
 
-
-
       </header>
+
+      
       <LoginPrompt login={login} />
 
       <main className="App   m-auto relative mb-[68px] z-1 col-start-2 col-span-3 w-full border-l border-r
@@ -148,7 +143,7 @@ return (
         </Routes>
 
       </main>
-      </div>
+  </div>
   </AppContext.Provider>
 
   )

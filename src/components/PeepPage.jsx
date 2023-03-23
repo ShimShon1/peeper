@@ -9,14 +9,13 @@ import commentIcon from "../../src/images/comment.svg"
 import likeIconGreen from "../../src/images/likeGreen.svg"
 import { Link } from "react-router-dom";
 import { AppContext } from "../App";
-
+import PeepComment from "./PeepComment";
 
 
 export default function PeepPage({peep,updatePeepsList,likePeep,deletePeep}){
     const[newComment,setNewComment] = useState('')
-
     const {user} = useContext(AppContext)
-
+    
     const peepRef = doc(db,"peeps",peep.docId)
 
     async function addComment(e){
@@ -37,7 +36,6 @@ export default function PeepPage({peep,updatePeepsList,likePeep,deletePeep}){
         }
        )
 
-
     updatePeepsList()
     setNewComment('')
 
@@ -53,13 +51,12 @@ export default function PeepPage({peep,updatePeepsList,likePeep,deletePeep}){
 
     updatePeepsList()
     }
+
+
+
     const commentElms = peep.comments.map((comment)=>{
         return(
-            <div className="border-b">
-                <PeepContent   peep={comment}  deleteComment={() => deleteComment(comment.content)} />
-                <img src={trashIcon} onClick={() => deleteComment(comment.content)}
-                className='absolute bottom-0 right-0 p-4 cursor-pointer' alt="trash Icon" />
-            </div>
+            <PeepComment comment={comment}  deleteComment={() => deleteComment(comment.content)} trashIcon={trashIcon}/>
         ) 
     }
     )

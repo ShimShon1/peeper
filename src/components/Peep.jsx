@@ -19,14 +19,15 @@ export default function Peep({peep,likePeep,deletePeep}){
 
     return(
         <div className="border-b  pb-2 lg:pb-2 ">
-        <Link to={peep.docId}>
+        <Link to={'/' + peep.docId}>
             <PeepContent peep={peep}/>
         </Link>
         <div className="flex ml-[72px] p-4 lg:px-8 pt-2 pb-4 w-2/3 lg:w-1/3  justify-between items-center">
 
-                    
-        <Link to={peep.docId}> 
-            <div className="flex items-center gap-2 text-xs cursor-pointer "><img className="" src={commentIcon} alt="" /> {peep.comments.length}</div></Link>
+
+        <Link to={'/' + peep.docId}> 
+            <div className="flex items-center gap-2 text-xs cursor-pointer "><img className="" src={commentIcon} alt="" /> {peep.comments.length}</div>
+        </Link>
 
             <div className="flex items-center gap-2 text-xs cursor-pointer"><img className="" onClick={()=>likePeep(peep)} src={liked? likeIconGreen:likeIcon} alt="" /> {peep.likedBy.length}</div>
 

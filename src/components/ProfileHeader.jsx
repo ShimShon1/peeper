@@ -17,7 +17,6 @@ export default function ProfileHeader(){
 
             <img className="rounded-[50%] absolute top-10 lg:top-1/3 "
             src={user.photoURL} alt="User Profile"/>
-
             <div className="flex justify-between">
 
             <h1 className="font-semibold text-2xl mt-4">{user.displayName}</h1>
