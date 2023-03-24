@@ -2,7 +2,7 @@ export default function PeepContent({peep}){
     return(
         <div className="p-4 lg:p-8">
             <div className="flex  gap-3 pt-4 ">
-                <img className="rounded-[50%] h-14 " src={peep.userPosted.photoURL} alt="user profile picure" />
+                <img className="rounded-[50%] h-14 " src={peep.userPosted.photoURL } alt="user profile picure" />
                 <h3 className="font-semibold">{peep.userPosted.displayName}</h3>
             </div>
 

@@ -2,6 +2,7 @@
 import { useContext } from "react"
 import coverImg from "../../src/images/cover.avif"
 import { AppContext } from "../App"
+import defaultPfp from "../../src/images/defaultPfp.webp"
 
 
 export default function ProfileHeader(){
@@ -15,8 +16,8 @@ export default function ProfileHeader(){
          <img className="w-full h-28 lg:h-44" src={coverImg} alt="" />
          <div className="p-4 lg:p-8  shadow-sm flex flex-col justify-around border-b">
 
-            <img className="rounded-[50%] absolute top-10 lg:top-1/3 "
-            src={user.photoURL} alt="User Profile"/>
+            <img className="rounded-[50%] absolute top-10 lg:top-1/3 max-h-24"
+            src={user.photoURL || defaultPfp} alt="User Profile"/>
             <div className="flex justify-between">
 
             <h1 className="font-semibold text-2xl mt-4">{user.displayName}</h1>

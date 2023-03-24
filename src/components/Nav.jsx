@@ -27,12 +27,13 @@ async function logout(){
    }
 
     return(
-        <nav className={`${!user && "hidden md:flex "}
-         flex justify-around p-4 shadow-sm bg-white items-center md:flex-col  md:px-6  md:shadow-none md:h-1/3 md:fixed  `}>
+        <nav className={`${!user && "hidden md:flex  md:h-[22%]  "}
+         flex justify-around p-4 shadow-sm bg-white items-center md:flex-col md:h-1/3  md:px-6  md:shadow-none  md:fixed `}>
 
             <NavLinkComp icon={homeIcon} name={'Home'} path={'/'} />
 
-            <NavLinkComp icon={profileIcon} name={'Profile'} path={'/profile'} />
+            {user && <NavLinkComp icon={profileIcon} name={'Profile'} path={'/profile'} />}
+            
 
             {user? <Link onClick={logout}  className="flex items-center gap-6 font-semibold text-lg ml-3 hover:bg-red-300 p-2 rounded-full"   ><img src={logoutIcon}  alt="logout icon"/><span className="hidden md:inline-block">Log-out</span></Link> :
              <Link onClick={login} className="flex items-center gap-6 font-semibold text-lg hover:bg-emerald-200 p-2 rounded-full "    ><img src={loginIcon}  alt="login icon"/><span className="hidden md:inline-block">Log-in</span></Link>}

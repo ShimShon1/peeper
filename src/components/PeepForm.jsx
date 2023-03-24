@@ -14,7 +14,9 @@ export default function PeepForm(props){
 
      async function addPeep(e){
         e.preventDefault()
-
+        if(content.length < 1){
+            return 
+        }
         let imgLink = false
 
 
@@ -55,7 +57,7 @@ export default function PeepForm(props){
         
 
         <div className="pt-3  text-xl flex-grow">
-                <textarea  value={content} onChange={(e)=>setContent(e.target.value)}
+                <textarea minLength={3} value={content} onChange={(e)=>setContent(e.target.value)}
                 className='resize-none indent-2  focus:outline-none   '  placeholder="What's happening?"
                 />
 

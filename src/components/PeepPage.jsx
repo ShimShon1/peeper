@@ -7,6 +7,7 @@ import trashIcon from "../../src/images/trash.svg"
 import likeIcon from "../../src/images/like.svg"
 import commentIcon from "../../src/images/comment.svg"
 import likeIconGreen from "../../src/images/likeGreen.svg"
+import defaultPfp from "../../src/images/defaultPfp.webp"
 import { Link } from "react-router-dom";
 import { AppContext } from "../App";
 import PeepComment from "./PeepComment";
@@ -20,6 +21,10 @@ export default function PeepPage({peep,updatePeepsList,likePeep,deletePeep}){
 
     async function addComment(e){
         e.preventDefault()
+
+        if(newComment.length < 1){
+            return 
+        }
         await updateDoc(peepRef,{
             comments:[
                 ...peep.comments,
@@ -62,7 +67,7 @@ export default function PeepPage({peep,updatePeepsList,likePeep,deletePeep}){
     )
 
     let liked = peep.likedBy.includes(user.uid)
-
+    console.log(user.photoURL)
 
     return(
         
@@ -85,19 +90,18 @@ export default function PeepPage({peep,updatePeepsList,likePeep,deletePeep}){
                      : <div className="w-[12px]  "></div>}
             </div>
 
-
             <form className="w-full flex p-4 lg:p-8 border-t pb-2 lg:pb-2" onSubmit={(e)=>addComment(e)}>
             <hr />
                 <div className="">
-                    <img className="rounded-[50%] h-14  " src={user.photoURL} alt="profile-pic" />
+                    <img className="rounded-[50%] h-14  " src={user.photoURL || defaultPfp } alt="profile-pic" />
                 </div>
                     <div className="pt-3 flex-grow text-xl">
                         <textarea  onChange={(e)=>setNewComment(e.target.value)} value={newComment}
-                        className='resize-none indent-2 relative  w-full  focus:outline-none'  placeholder="Peep your reply"
+                        className='resize-none indent-2 relative  w-full  focus:outline-none'  placeholder= {user? "Peep your reply": "Log in to reply!"}
                         />
                 <div className="flex items-center justify-end ">
                     <div>
-                        <SubmitBtn content={"Reply"}/>
+                        {user && <SubmitBtn content={"Reply"}/>}
 
                     </div>
                 </div>
