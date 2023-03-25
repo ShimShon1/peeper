@@ -2,14 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
-  font-family: 'Karla', sans-serif;
+  font-family: "Karla", sans-serif;
 }
 
-
-
-.active{
+.active {
   color: rgb(0, 150, 105);
 }
