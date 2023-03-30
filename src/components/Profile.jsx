@@ -37,6 +37,7 @@ export default function Profile({ deletePeep, likePeep, updatePeepsList }) {
   const peepElms = userPeeps.map((peep) => {
     return (
       <Peep
+        key={peep.docId}
         deletePeep={() => {
           deletePeep(peep);
           getUserPeeps();

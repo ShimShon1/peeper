@@ -8,16 +8,25 @@ import likeIcon from "../../src/images/like.svg";
 import commentIcon from "../../src/images/comment.svg";
 import likeIconGreen from "../../src/images/likeGreen.svg";
 import defaultPfp from "../../src/images/defaultPfp.webp";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AppContext } from "../App";
 import PeepComment from "./PeepComment";
 
 export default function PeepPage({
-  peep,
+  peeps,
   updatePeepsList,
   likePeep,
   deletePeep,
 }) {
+  let param = useParams();
+  let peep;
+  peeps.forEach((item) => {
+    if (item.docId === param.id) {
+      peep = item;
+    }
+  });
+
+  console.log(param);
   const [newComment, setNewComment] = useState("");
   const { user } = useContext(AppContext);
 

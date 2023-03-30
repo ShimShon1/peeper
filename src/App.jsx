@@ -23,7 +23,6 @@ export const AppContext = createContext(null);
 
 export default function App() {
   const [peepsObjects, setPeepsObjects] = useState([]);
-
   const [user, setUser] = useState(false);
 
   let currentPath = useLocation().pathname;
@@ -50,22 +49,6 @@ export default function App() {
   useEffect(() => {
     updatePeepsList();
   }, []);
-
-  const peepRoutes = peepsObjects.map((peep) => (
-    <Route
-      key={peep.docId}
-      path={peep.docId}
-      element={
-        <PeepPage
-          deletePeep={deletePeep}
-          likePeep={likePeep}
-          user={user}
-          peep={peep}
-          updatePeepsList={updatePeepsList}
-        />
-      }
-    />
-  ));
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -160,7 +143,19 @@ export default function App() {
                 />
               }
             />
-            {peepRoutes}
+
+            <Route
+              path={"/:id"}
+              element={
+                <PeepPage
+                  deletePeep={deletePeep}
+                  likePeep={likePeep}
+                  user={user}
+                  peeps={peepsObjects}
+                  updatePeepsList={updatePeepsList}
+                />
+              }
+            />
           </Routes>
         </main>
       </div>

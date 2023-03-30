@@ -34,18 +34,20 @@ export default function Nav({ login }) {
 
       {user ? (
         <Link
+          aria-label="logout"
           onClick={logout}
           className="flex items-center gap-6 font-semibold text-lg ml-3 hover:bg-red-300 p-2 rounded-full"
         >
-          <img src={logoutIcon} alt="logout icon" />
+          <img src={logoutIcon} alt="" />
           <span className="hidden md:inline-block">Log-out</span>
         </Link>
       ) : (
         <Link
+          aria-label="login"
           onClick={login}
           className="flex items-center gap-6 font-semibold text-lg hover:bg-emerald-200 p-2 rounded-full "
         >
-          <img src={loginIcon} alt="login icon" />
+          <img src={loginIcon} alt="" />
           <span className="hidden md:inline-block">Log-in</span>
         </Link>
       )}
