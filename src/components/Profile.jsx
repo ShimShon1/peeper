@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
@@ -9,6 +11,14 @@ export default function Profile({ deletePeep, likePeep, updatePeepsList }) {
   const [userPeeps, setUserPeeps] = useState([]);
 
   const { user } = useContext(AppContext);
+
+  console.log(user.uid);
+
+  useEffect(() => {
+    if (!user.uid) return;
+
+    getUserPeeps();
+  }, [user.uid]);
 
   async function getUserPeeps() {
     try {
@@ -29,10 +39,6 @@ export default function Profile({ deletePeep, likePeep, updatePeepsList }) {
       console.error(e);
     }
   }
-
-  useEffect(() => {
-    getUserPeeps();
-  }, []);
 
   const peepElms = userPeeps.map((peep) => {
     return (

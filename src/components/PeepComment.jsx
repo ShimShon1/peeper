@@ -3,7 +3,6 @@ import { AppContext } from "../App";
 import PeepContent from "./PeepContent";
 
 export default function PeepComment({ trashIcon, comment, deleteComment }) {
-  console.log(comment);
   let { user } = useContext(AppContext);
 
   return (

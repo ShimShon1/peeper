@@ -18,19 +18,21 @@ export default function PeepPage({
   likePeep,
   deletePeep,
 }) {
+  const [newComment, setNewComment] = useState("");
+  const { user } = useContext(AppContext);
+
   let param = useParams();
   let peep;
+  let peepRef;
   peeps.forEach((item) => {
     if (item.docId === param.id) {
       peep = item;
     }
   });
 
-  console.log(param);
-  const [newComment, setNewComment] = useState("");
-  const { user } = useContext(AppContext);
+  if (!peep) return <div> </div>;
 
-  const peepRef = doc(db, "peeps", peep.docId);
+  peepRef = doc(db, "peeps", peep.docId);
 
   async function addComment(e) {
     e.preventDefault();
@@ -79,7 +81,6 @@ export default function PeepPage({
   });
 
   let liked = peep.likedBy.includes(user.uid);
-  console.log(user.photoURL);
 
   return (
     <>
